@@ -15,12 +15,17 @@ class App extends Component {
   }
 
   nameChangedHandler = (event, id) => {
+      const personIndex = this.state.persons.findIndex(el => {
+          return el.id === id;
+      });
+      const person = { ...this.state.persons[personIndex]};
+      // const person = Object.assign({), this.state.persons[personIndex]);
+      person.name = event.target.value;
+      const persons = [...this.state.persons];
+      persons[personIndex] = person;
+
       this.setState({
-          persons: [
-              {name: 'Max', age: 6666},
-              {name: event.target.value, age: 44},
-              {name: 'stefaniiii', age: 62},
-          ]
+          persons: persons
       });
   }
   deletePersonHandler = (personIndex) => {
@@ -39,9 +44,9 @@ class App extends Component {
 
   render() {
       const myStyleObjectProps = {
-          backgroundColor: 'white',
+          backgroundColor: '#0984e3',
           font: 'inherit',
-          border: '1px solid blue',
+          border: '1px solid #0984e3',
           padding: '8px',
           cursor: 'pointer'
       };
@@ -56,12 +61,12 @@ class App extends Component {
           name ={el.name} 
           age={el.age}
           key = {el.id}
-          changed = {this.nameChangedHandler}  /> 
+          changed = {(event) => this.nameChangedHandler(event, el.id)}  />
         })}
         
       </div> 
       );
-
+        myStyleObjectProps.backgroundColor= '#74b9ff';
     }
     return (
       <div className="App">
