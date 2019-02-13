@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import './App.css';
+import  classes from './App.css';
 import Person from './Person/Person';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
 class App extends Component {
 
@@ -43,46 +44,44 @@ class App extends Component {
   }
 
   render() {
-      const myStyleObjectProps = {
-          backgroundColor: '#0984e3',
-          font: 'inherit',
-          border: '1px solid #0984e3',
-          padding: '8px',
-          cursor: 'pointer'
-      };
-
     let persons = null;
+    let btnClass =''; 
+     
     if(this.state.showPersons){
       persons = (       
       <div>
         {this.state.persons.map( (el, index) => {
-          return <Person 
+          return <ErrorBoundary
+          key = {el.id}>
+          <Person 
           click={ () => this.deletePersonHandler(index)}
           name ={el.name} 
           age={el.age}
           key = {el.id}
           changed = {(event) => this.nameChangedHandler(event, el.id)}  />
+          </ErrorBoundary>
         })}
         
       </div> 
       );
-        myStyleObjectProps.backgroundColor= '#74b9ff';
+      btnClass = classes.Red;
     }
-    let classes =[];
+
+    let assignedClasses =[];
     if(this.state.persons.length <= 2){
-      classes.push('red');
+      assignedClasses.push(classes.red);
     }
     if(this.state.persons.length <= 1){
-      classes.push('bold');
+      assignedClasses.push(classes.bold);
     }
     return (
     
-      <div className="App">
+      <div className={classes.App}>
         <h1>Hi, it's react app. </h1>
-        <p className={classes.join('  ')}>This is really working!</p>
+        <p className={assignedClasses.join('  ')}>This is really working!</p>
         <button
-            style={myStyleObjectProps}
-            onClick={this.togglePersonsHandler}>Switch name!
+          className={btnClass}
+          onClick={this.togglePersonsHandler}>Switch name!
         </button>
         {persons}
       </div>
