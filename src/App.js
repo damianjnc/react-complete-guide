@@ -68,15 +68,26 @@ class App extends Component {
       );
         myStyleObjectProps.backgroundColor= '#74b9ff';
     }
+    let classes =[];
+    if(this.state.persons.length <= 2){
+      classes.push('red');
+    }
+    if(this.state.persons.length <= 1){
+      classes.push('bold');
+    }
     return (
+    
       <div className="App">
         <h1>Hi, it's react app. </h1>
+        <p className={classes.join('  ')}>This is really working!</p>
         <button
             style={myStyleObjectProps}
             onClick={this.togglePersonsHandler}>Switch name!
         </button>
         {persons}
       </div>
+     
+
     );
   }
 }
